@@ -24,6 +24,34 @@ class SigilAPI {
             formatListString(sigils)
         }
 
+    fun updateSigil(indexToUpdate: Int, sigil: Sigil?): Boolean {
+        // find the sigil object by the index number
+        val foundSigil = findSigil(indexToUpdate)
+
+        // if the sigil exists, use the sigil details passed as parameters to update the found sigil in the ArrayList.
+        if ((foundSigil != null) && (sigil != null)) {
+            foundSigil.sigilName = sigil.sigilName
+            foundSigil.sigilDescription = sigil.sigilDescription
+            foundSigil.power = sigil.power
+            return true
+        }
+
+        // if the sigil was not found, return false, indicating that the update was not successful
+        return false
+    }
+
+    fun findSigil(index: Int): Sigil? {
+        return if (isValidListIndex(index, sigils)) {
+            sigils[index]
+        } else {
+            null
+        }
+    }
+
+    fun isValidIndex(index: Int): Boolean {
+        return isValidListIndex(index, sigils)
+    }
+
     private fun formatListString(sigilsToFormat: List<Sigil>): String =
         sigilsToFormat
             .joinToString(separator = "\n") { sigil ->
