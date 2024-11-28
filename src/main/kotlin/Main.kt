@@ -19,7 +19,7 @@ fun mainMenu() {
         when (val option = mainMenuDisplay()) {
             1 -> addSigil()
             2 -> listSigils()
-            //3 ->  updateSigil()
+            3 ->  updateSigil()
             4 -> deleteSigil()
             //5 -> searchSigil()
 
@@ -106,6 +106,29 @@ fun deleteSigil() {
             println("Delete Successful! Deleted sigil: ${sigilToDelete.sigilName}")
         } else {
             println("Delete NOT Successful")
+        }
+    }
+}
+
+fun updateSigil() {
+    listSigils()
+    if (sigilAPI.numberOfSigils() > 0) {
+        // only ask the user to choose the sigil if sigils exist
+        val indexToUpdate = readNextInt("Enter the index of the sigil to update: ")
+        if (sigilAPI.isValidIndex(indexToUpdate)) {
+            val sigilName = readNextLine("Enter a name for the sigil:")1
+            val sigilDescription = readNextLine("Enter a description of the sigil")
+            println("Enter the Sigil's power level")
+            val power = readIntNotNull()
+
+            // pass the index of the sigil and the new sigil details to SigilAPI for updating and check for success.
+            if (sigilAPI.updateSigil(indexToUpdate, Sigil(sigilName, sigilDescription, power))) {
+                println("Update Successful")
+            } else {
+                println("Update Failed")
+            }
+        } else {
+            println("There are no sigils for this index number")
         }
     }
 }
