@@ -1,16 +1,23 @@
 package ie.setu
 
-import utils.readNextInt
+
+import ie.setu.controllers.SigilAPI
+import ie.setu.models.Sigil
+import utils.*
+import kotlin.system.exitProcess
 
 fun main() {
     mainMenu()
 }
 
+private val sigilAPI = SigilAPI()
+
+
 
 fun mainMenu() {
     do {
         when (val option = mainMenuDisplay()) {
-            //1 -> addSigil()
+            1 -> addSigil()
             //2 -> listSigils()
             //3 ->  updateSigil()
             //4 -> deleteSigil()
@@ -25,10 +32,15 @@ fun mainMenu() {
             //11 -> save()
             //12 -> load()
 
-
+            0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
+}
+
+fun exitApp() {
+    println("Exiting...bye")
+    exitProcess(0)
 }
 
 fun mainMenuDisplay(): Int {
@@ -59,4 +71,24 @@ fun mainMenuDisplay(): Int {
          >""".trimMargin(">")
     )
     return readNextInt(" > ==>>")
+
+
 }
+
+fun addSigil() {
+    val sigilName = readNextLine("Enter a name for the sigil:")
+    val sigilDescription = readNextLine("Enter a description of the sigil")
+    println("Enter the Sigil's power level")
+    val power = readIntNotNull()
+
+    val isAdded = sigilAPI.add(Sigil(sigilName, sigilDescription, power))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
+    }
+}
+
+
+
