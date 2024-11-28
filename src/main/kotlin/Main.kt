@@ -18,9 +18,9 @@ fun mainMenu() {
     do {
         when (val option = mainMenuDisplay()) {
             1 -> addSigil()
-            //2 -> listSigils()
+            2 -> listSigils()
             //3 ->  updateSigil()
-            //4 -> deleteSigil()
+            4 -> deleteSigil()
             //5 -> searchSigil()
 
             //6 -> addCard()
@@ -87,6 +87,26 @@ fun addSigil() {
         println("Added Successfully")
     } else {
         println("Add Failed")
+    }
+}
+
+fun listSigils() {
+    println(sigilAPI.listAllSigils())
+}
+
+
+fun deleteSigil() {
+    listSigils()
+    if (sigilAPI.numberOfSigils() > 0) {
+        // only ask the user to choose the sigil to delete if sigils exist
+        val indexToDelete = readNextInt("Enter the index of the sigil to delete: ")
+        // pass the index of the sigil to SigilAPI for deleting and check for success.
+        val sigilToDelete = sigilAPI.deleteSigil(indexToDelete)
+        if (sigilToDelete != null) {
+            println("Delete Successful! Deleted sigil: ${sigilToDelete.sigilName}")
+        } else {
+            println("Delete NOT Successful")
+        }
     }
 }
 
