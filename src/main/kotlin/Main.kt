@@ -21,7 +21,7 @@ fun mainMenu() {
             2 -> listSigils()
             3 ->  updateSigil()
             4 -> deleteSigil()
-            //5 -> searchSigil()
+            5 -> searchSigils()
 
             //6 -> addCard()
             //7 -> listCards()
@@ -130,6 +130,16 @@ fun updateSigil() {
         } else {
             println("There are no sigils for this index number")
         }
+    }
+}
+
+fun searchSigils() {
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = sigilAPI.searchByDescription(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No sigils found")
+    } else {
+        println(searchResults)
     }
 }
 
