@@ -1,7 +1,9 @@
 package ie.setu
 
 
+import ie.setu.controllers.CardAPI
 import ie.setu.controllers.SigilAPI
+import ie.setu.models.Card
 import ie.setu.models.Sigil
 import utils.*
 import kotlin.system.exitProcess
@@ -11,6 +13,7 @@ fun main() {
 }
 
 private val sigilAPI = SigilAPI()
+private val cardAPI = CardAPI()
 
 
 
@@ -23,7 +26,8 @@ fun mainMenu() {
             4 -> deleteSigil()
             5 -> searchSigils()
 
-            //6 -> addCard()
+            6 -> addCard()
+            7 -> println(cardAPI.numberOfCards())
             //7 -> listCards()
             //8 ->  updateCard()
             //9 -> deleteCard()
@@ -75,11 +79,58 @@ fun mainMenuDisplay(): Int {
 
 }
 
+fun addCard() {
+    val cardName = readNextLine("Enter a name for the card:")
+    val hp = readNextInt("how much hp does this card have:")
+    val dmg = readNextInt("how much damage does this card do:")
+    val tribe = readNextLine("What tribe is this card in:")
+    val costType = readNextLine("What type of cost does this card use:")
+    var cost = 0
+    var moxCost: ArrayList<Boolean> = ArrayList<Boolean>()
+    if (costType == "Mox") {
+        val redCost = readNextLine("Type 1 if this card uses Red Mox, otherwise type anything else:")
+        val greenCost = readNextLine("Type 1 if this card uses Green Mox, otherwise type anything else:")
+        val blueCost = readNextLine("Type 1 if this card uses Blue Mox, otherwise type anything else:")
+        moxCost = arrayListOf(redCost.equals("1"), greenCost.equals("1"), blueCost.equals("1",))
+    } else {
+        cost = readNextInt("what is this cards cost:")
+        moxCost = arrayListOf(false, false, false)
+    }
+    var sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()
+    if(sigilAPI.numberOfSigils() != 0) {
+        var sigilCount = readNextInt("how many sigils does this card have")
+        var i = 0
+        while (i < sigilCount) {
+            listSigils()
+            val indexToAdd = readNextInt("Enter the index of a sigil to add: ")
+            if (sigilAPI.findSigil(indexToAdd) != null) {
+                sigils.add(sigilAPI.findSigil(indexToAdd)!!)
+            } else {
+                println("invalid index please try again")
+                sigilCount += 1
+            }
+            sigilAPI.findSigil(indexToAdd)?.let { sigils.add(it) }
+            i++
+        }
+        for (i in 1.. sigilCount) {
+
+        }
+    }
+
+    val isAdded = cardAPI.add(Card(cardName, hp, dmg, tribe, cost, costType, sigils, moxCost))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
+    }
+}
+
+
 fun addSigil() {
     val sigilName = readNextLine("Enter a name for the sigil:")
     val sigilDescription = readNextLine("Enter a description of the sigil")
-    println("Enter the Sigil's power level")
-    val power = readIntNotNull()
+    val power = readNextInt("Enter the Sigil's power level")
 
     val isAdded = sigilAPI.add(Sigil(sigilName, sigilDescription, power))
 
@@ -116,10 +167,10 @@ fun updateSigil() {
         // only ask the user to choose the sigil if sigils exist
         val indexToUpdate = readNextInt("Enter the index of the sigil to update: ")
         if (sigilAPI.isValidIndex(indexToUpdate)) {
-            val sigilName = readNextLine("Enter a name for the sigil:")1
+            val sigilName = readNextLine("Enter a name for the sigil:")
             val sigilDescription = readNextLine("Enter a description of the sigil")
             println("Enter the Sigil's power level")
-            val power = readIntNotNull()
+            val power = readNextInt("Enter the Sigil's power level")
 
             // pass the index of the sigil and the new sigil details to SigilAPI for updating and check for success.
             if (sigilAPI.updateSigil(indexToUpdate, Sigil(sigilName, sigilDescription, power))) {

@@ -53,6 +53,7 @@ class SigilAPI {
             sigils.filter { sigil -> sigil.sigilDescription.contains(searchString, ignoreCase = true) }
         )
 
+
     fun isValidIndex(index: Int): Boolean {
         return isValidListIndex(index, sigils)
     }
