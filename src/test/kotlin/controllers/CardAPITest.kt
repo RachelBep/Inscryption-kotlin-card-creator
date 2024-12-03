@@ -78,4 +78,40 @@ class CardAPITest {
 
 
     }
+
+
+    @Nested
+    inner class ListCards {
+
+        @Test
+        fun `listAllCards returns No Cards Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyCards!!.numberOfCards())
+            assertTrue(emptyCards!!.listAllCards().lowercase().contains("no cards"))
+        }
+
+        @Test
+        fun `listAllCards returns Cards when ArrayList has cards stored`() {
+            assertEquals(3, populatedCards!!.numberOfCards())
+            val cardsString = populatedCards!!.listAllCards().lowercase()
+            assertTrue(cardsString.contains("squirrel"))
+            assertTrue(cardsString.contains("mox"))
+            assertTrue(cardsString.contains("wizard"))
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
 }

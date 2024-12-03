@@ -27,8 +27,7 @@ fun mainMenu() {
             5 -> searchSigils()
 
             6 -> addCard()
-            7 -> println(cardAPI.numberOfCards())
-            //7 -> listCards()
+            7 -> listCards()
             //8 ->  updateCard()
             //9 -> deleteCard()
             //10 -> searchCard()
@@ -117,6 +116,8 @@ fun addCard() {
         }
     }
 
+
+
     val isAdded = cardAPI.add(Card(cardName, hp, dmg, tribe, cost, costType, sigils, moxCost))
 
     if (isAdded) {
@@ -125,7 +126,9 @@ fun addCard() {
         println("Add Failed")
     }
 }
-
+fun listCards() {
+    println(cardAPI.listAllCards())
+}
 
 fun addSigil() {
     val sigilName = readNextLine("Enter a name for the sigil:")

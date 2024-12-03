@@ -9,4 +9,23 @@ class Card(
     var costType: String = "",
     var sigils: ArrayList<Sigil?> = ArrayList<Sigil?>(),
     var moxCost: ArrayList<Boolean> = ArrayList<Boolean>()
-)
+) {
+    override fun toString(): String {
+        val sigilString = sigils.joinToString(separator = ", ") { i -> i?.sigilName.toString() }
+        if (costType.equals("Mox")) {
+            var moxString = ""
+            if (moxCost[0]) {
+                moxString = moxString + "R"
+            }
+            if (moxCost[1]) {
+                moxString = moxString + "G"
+            }
+            if (moxCost[2]) {
+                moxString = moxString + "b"
+            }
+            return "Name: ${cardName}, hp: ${hp}, dmg: ${dmg}, tribe: ${tribe}, Cost: ${moxString} ${costType}, Sigils: ${sigilString}"
+        } else {
+            return "Name: ${cardName}, hp: ${hp}, dmg: ${dmg}, tribe: ${tribe}, Cost: ${cost} ${costType}, Sigils: ${sigilString}"
+        }
+    }
+}
