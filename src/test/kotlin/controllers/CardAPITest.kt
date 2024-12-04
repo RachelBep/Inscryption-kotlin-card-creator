@@ -149,6 +149,26 @@ class CardAPITest {
         }
     }
 
+    @Nested
+    inner class DeleteCards {
+
+        @Test
+        fun `deleting a Card that does not exist, returns null`() {
+            assertNull(emptyCards!!.deleteCard(0))
+            assertNull(populatedCards!!.deleteCard(-1))
+            assertNull(populatedCards!!.deleteCard(5))
+        }
+
+        @Test
+        fun `deleting a card that exists delete and returns deleted object`() {
+            assertEquals(3, populatedCards!!.numberOfCards())
+            assertEquals(rainbow, populatedCards!!.deleteCard(1))
+            assertEquals(2, populatedCards!!.numberOfCards())
+            assertEquals(ourobouros, populatedCards!!.deleteCard(0))
+            assertEquals(1, populatedCards!!.numberOfCards())
+        }
+    }
+
 
 
 
