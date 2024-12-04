@@ -29,7 +29,7 @@ fun mainMenu() {
             6 -> addCard()
             7 -> listCards()
             8 ->  updateCard()
-            //9 -> deleteCard()
+            9 -> deleteCard()
             //10 -> searchCard()
 
             //11 -> save()
@@ -186,6 +186,21 @@ fun updateCard() {
 
         } else {
             println("There are no notes for this index number")
+        }
+    }
+}
+
+fun deleteCard() {
+    listCards()
+    if (cardAPI.numberOfCards() > 0) {
+        // only ask the user to choose the card to delete if cardss exist
+        val indexToDelete = readNextInt("Enter the index of the card to delete: ")
+        // pass the index of the card to CardAPI for deleting and check for success.
+        val cardToDelete = cardAPI.deleteCard(indexToDelete)
+        if (cardToDelete != null) {
+            println("Delete Successful! Deleted sigil: ${cardToDelete.cardName}")
+        } else {
+            println("Delete NOT Successful")
         }
     }
 }

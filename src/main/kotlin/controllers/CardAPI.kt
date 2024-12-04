@@ -25,7 +25,15 @@ class CardAPI {
             null
         }
     }
-    
+
+    fun deleteCard(indexToDelete: Int): Card? {
+        return if (isValidListIndex(indexToDelete, cards)) {
+            cards.removeAt(indexToDelete)
+        } else {
+            null
+        }
+    }
+
     fun updateCardSigil(indexToUpdate: Int, sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()): Boolean {
         // find the card object by the index number
         val foundCard = findCard(indexToUpdate)
