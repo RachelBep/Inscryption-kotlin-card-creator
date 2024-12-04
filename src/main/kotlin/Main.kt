@@ -30,7 +30,7 @@ fun mainMenu() {
             7 -> listCards()
             8 ->  updateCard()
             9 -> deleteCard()
-            //10 -> searchCard()
+            10 -> searchCard()
 
             //11 -> save()
             //12 -> load()
@@ -126,6 +126,16 @@ fun addCard() {
 }
 fun listCards() {
     println(cardAPI.listAllCards())
+}
+
+fun searchCard() {
+    val searchTitle = readNextLine("Enter the name of the sigil to search by: ")
+    val searchResults = cardAPI.searchBySigil(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("Nothing found")
+    } else {
+        println(searchResults)
+    }
 }
 
 fun updateCard() {

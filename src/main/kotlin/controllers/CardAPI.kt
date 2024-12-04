@@ -3,6 +3,8 @@ package ie.setu.controllers
 import ie.setu.models.Card
 import ie.setu.models.Sigil
 import utils.isValidListIndex
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CardAPI {
     private var cards = ArrayList<Card>()
@@ -47,6 +49,22 @@ class CardAPI {
         // if the card was not found, return false, indicating that the update was not successful
         return false
     }
+
+    fun searchBySigil(searchString: String): String {
+        var filteredCards = ArrayList<Card>()
+        for (cardFor: Card in cards) {
+            for(sigil: Sigil? in cardFor.sigils) {
+                if (sigil != null) {
+                    if (sigil.sigilName.lowercase(Locale.getDefault()).contains(searchString.lowercase(Locale.getDefault()))) {
+                        filteredCards.add(cardFor)
+                        break
+                    }
+                }
+            }
+        }
+        return formatListString(filteredCards)
+    }
+
 
     fun updateCardNormal(indexToUpdate: Int, cardName: String, hp: Int, dmg: Int, tribe: String, cost: Int, costType: String, moxCost: ArrayList<Boolean> = ArrayList<Boolean>()): Boolean {
         // find the card object by the index number

@@ -24,13 +24,13 @@ class CardAPITest {
         undying = Sigil("Undying", "when this card perishes put it in your hand instead", 5)
         regenerating = Sigil("Regenerating", "regains 1 life each turn", 3)
         ourobouros =
-            arrayListOf(undying)?.let {
+            arrayListOf(undying, fecundity)?.let {
                 Card("Ouroborous", 1, 1, "none", 2, "Blood",
                     it, arrayListOf(false, false, false))
             }
         rainbow =
             Card("Rainbow Wizard", 2, 4, "Wizard", 0, "Mox",
-                arrayListOf(fecundity, regenerating), arrayListOf(true, true, true))
+                arrayListOf(regenerating), arrayListOf(true, true, true))
         squirrel = Card("Squirrel", 1, 0, "Squirrel", 0, "", arrayListOf(), arrayListOf(false, false, false))
 
         // adding 3 Card to the cards api
@@ -166,6 +166,40 @@ class CardAPITest {
             assertEquals(2, populatedCards!!.numberOfCards())
             assertEquals(ourobouros, populatedCards!!.deleteCard(0))
             assertEquals(1, populatedCards!!.numberOfCards())
+        }
+    }
+
+
+    @Nested
+    inner class SearchMethods {
+        @Test
+        fun `search cards by sigil returns no cards when no cards with that sigil exist`() {
+            // Searching a populated collection for a sigil that doesn't exist.
+            assertEquals(3, populatedCards!!.numberOfCards())
+            val searchResults = populatedCards!!.searchBySigil("no results expected")
+            assertTrue(searchResults.isEmpty())
+            // Searching an empty collection
+            assertEquals(0, emptyCards!!.numberOfCards())
+            assertTrue(emptyCards!!.searchBySigil("").isEmpty())
+        }
+
+        @Test
+        fun `search cards by sigils returns cards when card with that sigil exist`() {
+            assertEquals(3, populatedCards!!.numberOfCards())
+            // Searching a populated collection for a full sigil name that exists (case matches exactly)
+            var searchResults = populatedCards!!.searchBySigil("Undying")
+            assertTrue(searchResults.contains("Undying"))
+            assertFalse(searchResults.contains("Regenerating"))
+            // Searching a populated collection for a partial name that exists (case matches exactly)
+            searchResults = populatedCards!!.searchBySigil("y")
+            assertTrue(searchResults.contains("Undying"))
+            assertTrue(searchResults.contains("Fecundity"))
+            assertFalse(searchResults.contains("Regenerating"))
+            // Searching a populated collection for a partial name that exists (case doesn't match)
+            searchResults = populatedCards!!.searchBySigil("uN")
+            assertTrue(searchResults.contains("Undying"))
+            assertTrue(searchResults.contains("Fecundity"))
+            assertFalse(searchResults.contains("Regenerating"))
         }
     }
 
