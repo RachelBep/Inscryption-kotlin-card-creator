@@ -25,9 +25,47 @@ class CardAPI {
             null
         }
     }
+    
+    fun updateCardSigil(indexToUpdate: Int, sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()): Boolean {
+        // find the card object by the index number
+        val foundCard = findCard(indexToUpdate)
+
+        // if the card exists, use the card details passed as parameters to update the found card in the ArrayList.
+        if (foundCard != null) {
+            foundCard.sigils = sigils
+            return true
+        }
+
+        // if the card was not found, return false, indicating that the update was not successful
+        return false
+    }
+
+    fun updateCardNormal(indexToUpdate: Int, cardName: String, hp: Int, dmg: Int, tribe: String, cost: Int, costType: String, moxCost: ArrayList<Boolean> = ArrayList<Boolean>()): Boolean {
+        // find the card object by the index number
+        val foundCard = findCard(indexToUpdate)
+
+        // if the card exists, use the card details passed as parameters to update the found card in the ArrayList.
+        if ((foundCard != null)) {
+            foundCard.cardName = cardName
+            foundCard.hp = hp
+            foundCard.dmg = dmg
+            foundCard.tribe = tribe
+            foundCard.cost = cost
+            foundCard.costType = costType
+            foundCard.moxCost = moxCost
+            return true
+        }
+
+        // if the card was not found, return false, indicating that the update was not successful
+        return false
+    }
 
 
     fun numberOfCards() = cards.size
+
+    fun isValidIndex(index: Int): Boolean {
+        return isValidListIndex(index, cards)
+    }
 
     private fun formatListString(cardsToFormat: List<Card>): String =
         cardsToFormat

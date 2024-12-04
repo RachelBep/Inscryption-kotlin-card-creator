@@ -11,7 +11,7 @@ class Card(
     var moxCost: ArrayList<Boolean> = ArrayList<Boolean>()
 ) {
     override fun toString(): String {
-        val sigilString = sigils.joinToString(separator = ", ") { i -> i?.sigilName.toString() }
+        val sigilString = sigils.joinToString()
         if (costType.equals("Mox")) {
             var moxString = ""
             if (moxCost[0]) {
