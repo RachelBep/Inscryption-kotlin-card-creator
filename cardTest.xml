@@ -1,0 +1,63 @@
+<object-stream>
+  <list>
+    <ie.setu.models.Card>
+      <cardName>Rainbow Wizard</cardName>
+      <hp>2</hp>
+      <dmg>4</dmg>
+      <tribe>Wizard</tribe>
+      <cost>0</cost>
+      <costType>Mox</costType>
+      <sigils>
+        <ie.setu.models.Sigil>
+          <sigilName>Regenerating</sigilName>
+          <sigilDescription>regains 1 life each turn</sigilDescription>
+          <power>3</power>
+        </ie.setu.models.Sigil>
+      </sigils>
+      <moxCost>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+        <boolean>true</boolean>
+      </moxCost>
+    </ie.setu.models.Card>
+    <ie.setu.models.Card>
+      <cardName>Squirrel</cardName>
+      <hp>1</hp>
+      <dmg>0</dmg>
+      <tribe>Squirrel</tribe>
+      <cost>0</cost>
+      <costType></costType>
+      <sigils/>
+      <moxCost>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+      </moxCost>
+    </ie.setu.models.Card>
+    <ie.setu.models.Card>
+      <cardName>Ouroborous</cardName>
+      <hp>1</hp>
+      <dmg>1</dmg>
+      <tribe>none</tribe>
+      <cost>2</cost>
+      <costType>Blood</costType>
+      <sigils>
+        <ie.setu.models.Sigil>
+          <sigilName>Undying</sigilName>
+          <sigilDescription>when this card perishes put it in your hand instead</sigilDescription>
+          <power>5</power>
+        </ie.setu.models.Sigil>
+        <ie.setu.models.Sigil>
+          <sigilName>Fecundity</sigilName>
+          <sigilDescription>adds a copy of this card to your hand when played</sigilDescription>
+          <power>6</power>
+        </ie.setu.models.Sigil>
+      </sigils>
+      <moxCost>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+        <boolean>false</boolean>
+      </moxCost>
+    </ie.setu.models.Card>
+  </list>
+</object-stream>

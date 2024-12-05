@@ -1,10 +1,11 @@
 package ie.setu.controllers
 
 import ie.setu.models.Sigil
+import persistence.Serializer
 import utils.isValidListIndex
 
-class SigilAPI {
-
+class SigilAPI(serializerType: Serializer) {
+    private var serializer: Serializer = serializerType
     private var sigils = ArrayList<Sigil>()
     fun add(sigil: Sigil): Boolean{
         return sigils.add(sigil)
@@ -65,6 +66,16 @@ class SigilAPI {
             }
 
     fun numberOfSigils() = sigils.size
+
+    @Throws(Exception::class)
+    fun load() {
+        sigils = serializer.read() as ArrayList<Sigil>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(sigils)
+    }
 
 
 

@@ -5,15 +5,20 @@ import ie.setu.controllers.CardAPI
 import ie.setu.controllers.SigilAPI
 import ie.setu.models.Card
 import ie.setu.models.Sigil
+import persistence.JSONSerializer
 import utils.*
+import java.io.File
 import kotlin.system.exitProcess
+
+// private val sigilAPI = SigilAPI(XMLSerializer(File("sigils.xml")))
+private val sigilAPI = SigilAPI(JSONSerializer(File("sigil.json")))
+// private val cardAPI = CardAPI(XMLSerializer(File("cards.xml")))
+private val cardAPI = CardAPI(JSONSerializer(File("card.json")))
 
 fun main() {
     mainMenu()
 }
 
-private val sigilAPI = SigilAPI()
-private val cardAPI = CardAPI()
 
 
 
@@ -32,13 +37,31 @@ fun mainMenu() {
             9 -> deleteCard()
             10 -> searchCard()
 
-            //11 -> save()
-            //12 -> load()
+            11 -> save()
+            12 -> load()
 
             0 -> exitApp()
             else -> println("Invalid option entered: $option")
         }
     } while (true)
+}
+
+fun save() {
+    try {
+        cardAPI.store()
+        sigilAPI.store()
+    } catch (e: Exception) {
+        System.err.println("Error writing to file: $e")
+    }
+}
+
+fun load() {
+    try {
+        cardAPI.load()
+        sigilAPI.load()
+    } catch (e: Exception) {
+        System.err.println("Error reading from file: $e")
+    }
 }
 
 fun exitApp() {
@@ -108,7 +131,6 @@ fun addCard() {
                 println("invalid index please try again")
                 sigilCount += 1
             }
-            sigilAPI.findSigil(indexToAdd)?.let { sigils.add(it) }
             i++
         }
 
@@ -159,7 +181,6 @@ fun updateCard() {
                             println("invalid index please try again")
                             sigilCount += 1
                         }
-                        sigilAPI.findSigil(indexToAdd)?.let { sigils.add(it) }
                         i++
                     }
                     if (cardAPI.updateCardSigil(indexToUpdate, sigils)) {
@@ -257,7 +278,6 @@ fun updateSigil() {
         if (sigilAPI.isValidIndex(indexToUpdate)) {
             val sigilName = readNextLine("Enter a name for the sigil:")
             val sigilDescription = readNextLine("Enter a description of the sigil")
-            println("Enter the Sigil's power level")
             val power = readNextInt("Enter the Sigil's power level")
 
             // pass the index of the sigil and the new sigil details to SigilAPI for updating and check for success.

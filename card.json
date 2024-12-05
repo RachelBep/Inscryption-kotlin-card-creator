@@ -1,0 +1,1 @@
+{"object-stream":{"list":[{"ie.setu.models.Card":{"cardName":"Ouroboros","hp":1,"dmg":1,"tribe":"Lizard","cost":2,"costType":2,"sigils":[{"ie.setu.models.Sigil":[{"sigilName":"Undying","sigilDescription":"prevents death","power":4},{"@reference":"../ie.setu.models.Sigil"}]}],"moxCost":[{"boolean":[false,false,false]}]}}]}}

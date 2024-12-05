@@ -1,6 +1,7 @@
 package controllers
 
 import ie.setu.controllers.CardAPI
+import ie.setu.controllers.SigilAPI
 import ie.setu.models.Card
 import ie.setu.models.Sigil
 import org.junit.jupiter.api.AfterEach
@@ -8,6 +9,9 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import persistence.JSONSerializer
+import persistence.XMLSerializer
+import java.io.File
 
 class CardAPITest {
     private var fecundity: Sigil? = null
@@ -16,8 +20,8 @@ class CardAPITest {
     private var ourobouros: Card? = null
     private var rainbow: Card? = null
     private var squirrel: Card? = null
-    private var populatedCards: CardAPI? = CardAPI()
-    private var emptyCards: CardAPI? = CardAPI()
+    private var populatedCards: CardAPI? = CardAPI(XMLSerializer(File("cardTest.xml")))
+    private var emptyCards: CardAPI? = CardAPI(XMLSerializer(File("emptyCards.xml")))
     @BeforeEach
     fun setup() {
         fecundity = Sigil("Fecundity", "adds a copy of this card to your hand when played", 6)
@@ -204,6 +208,85 @@ class CardAPITest {
     }
 
 
+    @Nested
+    inner class PersistenceTests {
+
+        @Test
+        fun `saving and loading an empty collection in XML doesn't crash app`() {
+            // Saving an empty cardTest.XML file.
+            val storingCard = CardAPI(XMLSerializer(File("cardTest.xml")))
+            storingCard.store()
+
+            // Loading the empty cardTest.xml file into a new object
+            val loadedCard = CardAPI(XMLSerializer(File("cardTest.xml")))
+            loadedCard.load()
+
+            // Comparing the source of the cards (storingCard) with the XML loaded cards (loadedCard)
+            assertEquals(0, storingCard.numberOfCards())
+            assertEquals(0, loadedCard.numberOfCards())
+            assertEquals(storingCard.numberOfCards(), loadedCard.numberOfCards())
+        }
+
+        @Test
+        fun `saving and loading an loaded collection in XML doesn't loose data`() {
+            // Storing 3 cards to the cardTest.XML file.
+            val storingCard = CardAPI(XMLSerializer(File("cardTest.xml")))
+            storingCard.add(rainbow!!)
+            storingCard.add(squirrel!!)
+            storingCard.add(ourobouros!!)
+            storingCard.store()
+
+            // Loading cardTest.xml into a different collection
+            val loadedCard = CardAPI(XMLSerializer(File("cardTest.xml")))
+            loadedCard.load()
+
+            // Comparing the source of the cards (storingCard) with the XML loaded cards (loadedCard)
+            assertEquals(3, storingCard.numberOfCards())
+            assertEquals(3, loadedCard.numberOfCards())
+            assertEquals(storingCard.numberOfCards(), loadedCard.numberOfCards())
+            assertEquals(storingCard.findCard(0).toString(), loadedCard.findCard(0).toString())
+            assertEquals(storingCard.findCard(1).toString(), loadedCard.findCard(1).toString())
+            assertEquals(storingCard.findCard(2).toString(), loadedCard.findCard(2).toString())
+        }
+
+        @Test
+        fun `saving and loading an empty collection in JSON doesn't crash app`() {
+            // Saving an empty cardTest.json file.
+            val storingCard = CardAPI(JSONSerializer(File("cardTest.json")))
+            storingCard.store()
+
+            // Loading the empty cards.json file into a new object
+            val loadedCard = CardAPI(JSONSerializer(File("cardTest.json")))
+            loadedCard.load()
+
+            // Comparing the source of the cards (storingCard) with the json loaded cards (loadedCard)
+            assertEquals(0, storingCard.numberOfCards())
+            assertEquals(0, loadedCard.numberOfCards())
+            assertEquals(storingCard.numberOfCards(), loadedCard.numberOfCards())
+        }
+
+        @Test
+        fun `saving and loading an loaded collection in JSON doesn't loose data`() {
+            // Storing 3 cards to the cardTest.json file.
+            val storingCard = CardAPI(JSONSerializer(File("cardTest.json")))
+            storingCard.add(rainbow!!)
+            storingCard.add(squirrel!!)
+            storingCard.add(ourobouros!!)
+            storingCard.store()
+
+            // Loading cardTest.json into a different collection
+            val loadedCard = CardAPI(JSONSerializer(File("cardTest.json")))
+            loadedCard.load()
+
+            // Comparing the source of the cards (storingCard) with the json loaded cards (loadedCard)
+            assertEquals(3, storingCard.numberOfCards())
+            assertEquals(3, loadedCard.numberOfCards())
+            assertEquals(storingCard.numberOfCards(), loadedCard.numberOfCards())
+            assertEquals(storingCard.findCard(0).toString(), loadedCard.findCard(0).toString())
+            assertEquals(storingCard.findCard(1).toString(), loadedCard.findCard(1).toString())
+            assertEquals(storingCard.findCard(2).toString(), loadedCard.findCard(2).toString())
+        }
+    }
 
 
 
@@ -215,5 +298,7 @@ class CardAPITest {
 
 
 
-    
+
+
+
 }
