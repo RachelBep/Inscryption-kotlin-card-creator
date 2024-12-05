@@ -2,11 +2,13 @@ package ie.setu.controllers
 
 import ie.setu.models.Card
 import ie.setu.models.Sigil
+import persistence.Serializer
 import utils.isValidListIndex
 import java.util.*
 import kotlin.collections.ArrayList
 
-class CardAPI {
+class CardAPI(serializerType: Serializer) {
+    private var serializer: Serializer = serializerType
     private var cards = ArrayList<Card>()
     fun add(card: Card): Boolean {
         return cards.add(card)
@@ -91,6 +93,16 @@ class CardAPI {
 
     fun isValidIndex(index: Int): Boolean {
         return isValidListIndex(index, cards)
+    }
+
+    @Throws(Exception::class)
+    fun load() {
+        cards = serializer.read() as ArrayList<Card>
+    }
+
+    @Throws(Exception::class)
+    fun store() {
+        serializer.write(cards)
     }
 
     private fun formatListString(cardsToFormat: List<Card>): String =
