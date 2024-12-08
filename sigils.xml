@@ -1,0 +1,19 @@
+<object-stream>
+  <list>
+    <ie.setu.models.Sigil>
+      <sigilName>Diving</sigilName>
+      <sigilDescription>this cannot be attacked</sigilDescription>
+      <power>3</power>
+    </ie.setu.models.Sigil>
+    <ie.setu.models.Sigil>
+      <sigilName>Flying</sigilName>
+      <sigilDescription>this attacks directly</sigilDescription>
+      <power>6</power>
+    </ie.setu.models.Sigil>
+    <ie.setu.models.Sigil>
+      <sigilName>Bifrucating Strike</sigilName>
+      <sigilDescription>this deals damage to the left and right</sigilDescription>
+      <power>6</power>
+    </ie.setu.models.Sigil>
+  </list>
+</object-stream>
