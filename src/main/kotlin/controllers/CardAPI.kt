@@ -38,7 +38,7 @@ class CardAPI(serializerType: Serializer) {
         }
     }
 
-    fun updateCardSigil(indexToUpdate: Int, sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()): Boolean {
+    fun updateCardSigil(indexToUpdate: Int, sigils: ArrayList<Sigil?> = ArrayList()): Boolean {
         // find the card object by the index number
         val foundCard = findCard(indexToUpdate)
 
@@ -53,7 +53,7 @@ class CardAPI(serializerType: Serializer) {
     }
 
     fun searchBySigil(searchString: String): String {
-        var filteredCards = ArrayList<Card>()
+        val filteredCards = ArrayList<Card>()
         for (cardFor: Card in cards) {
             for(sigil: Sigil? in cardFor.sigils) {
                 if (sigil != null) {
@@ -68,7 +68,7 @@ class CardAPI(serializerType: Serializer) {
     }
 
 
-    fun updateCardNormal(indexToUpdate: Int, cardName: String, hp: Int, dmg: Int, tribe: String, cost: Int, costType: String, moxCost: ArrayList<Boolean> = ArrayList<Boolean>()): Boolean {
+    fun updateCardNormal(indexToUpdate: Int, cardName: String, hp: Int, dmg: Int, tribe: String, cost: Int, costType: String, moxCost: ArrayList<Boolean> = ArrayList()): Boolean {
         // find the card object by the index number
         val foundCard = findCard(indexToUpdate)
 

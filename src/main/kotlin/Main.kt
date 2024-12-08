@@ -108,17 +108,17 @@ fun addCard() {
     val tribe = readNextLine("What tribe is this card in:")
     val costType = readNextLine("What type of cost does this card use:")
     var cost = 0
-    var moxCost: ArrayList<Boolean> = ArrayList<Boolean>()
+    val moxCost: ArrayList<Boolean>
     if (costType == "Mox") {
         val redCost = readNextLine("Type 1 if this card uses Red Mox, otherwise type anything else:")
         val greenCost = readNextLine("Type 1 if this card uses Green Mox, otherwise type anything else:")
         val blueCost = readNextLine("Type 1 if this card uses Blue Mox, otherwise type anything else:")
-        moxCost = arrayListOf(redCost.equals("1"), greenCost.equals("1"), blueCost.equals("1",))
+        moxCost = arrayListOf(redCost == "1", greenCost == "1", blueCost == "1")
     } else {
         cost = readNextInt("what is this cards cost:")
         moxCost = arrayListOf(false, false, false)
     }
-    var sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()
+    val sigils: ArrayList<Sigil?> = ArrayList()
     if(sigilAPI.numberOfSigils() != 0) {
         var sigilCount = readNextInt("how many sigils does this card have")
         var i = 0
@@ -168,7 +168,7 @@ fun updateCard() {
         if (cardAPI.isValidIndex(indexToUpdate)) {
             val whatUpdate = readNextLine("Type 1 if you want to update sigils, otherwise type anything else")
             if (whatUpdate == "1") { //sigil updating
-                var sigils: ArrayList<Sigil?> = ArrayList<Sigil?>()
+                val sigils = ArrayList<Sigil?>()
                 if(sigilAPI.numberOfSigils() != 0) {
                     var sigilCount = readNextInt("how many sigils does this card have")
                     var i = 0
@@ -198,12 +198,12 @@ fun updateCard() {
                 val tribe = readNextLine("What tribe is this card in:")
                 val costType = readNextLine("What type of cost does this card use:")
                 var cost = 0
-                var moxCost: ArrayList<Boolean> = ArrayList<Boolean>()
+                val moxCost: ArrayList<Boolean>
                 if (costType == "Mox") {
                     val redCost = readNextLine("Type 1 if this card uses Red Mox, otherwise type anything else:")
                     val greenCost = readNextLine("Type 1 if this card uses Green Mox, otherwise type anything else:")
                     val blueCost = readNextLine("Type 1 if this card uses Blue Mox, otherwise type anything else:")
-                    moxCost = arrayListOf(redCost.equals("1"), greenCost.equals("1"), blueCost.equals("1",))
+                    moxCost = arrayListOf(redCost == "1", greenCost == "1", blueCost == "1")
                 } else {
                     cost = readNextInt("what is this cards cost:")
                     moxCost = arrayListOf(false, false, false)

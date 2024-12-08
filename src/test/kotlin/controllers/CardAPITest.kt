@@ -1,7 +1,6 @@
 package controllers
 
 import ie.setu.controllers.CardAPI
-import ie.setu.controllers.SigilAPI
 import ie.setu.models.Card
 import ie.setu.models.Sigil
 import org.junit.jupiter.api.AfterEach
@@ -28,10 +27,8 @@ class CardAPITest {
         undying = Sigil("Undying", "when this card perishes put it in your hand instead", 5)
         regenerating = Sigil("Regenerating", "regains 1 life each turn", 3)
         ourobouros =
-            arrayListOf(undying, fecundity)?.let {
-                Card("Ouroborous", 1, 1, "none", 2, "Blood",
-                    it, arrayListOf(false, false, false))
-            }
+            Card("Ouroborous", 1, 1, "none", 2, "Blood",
+                arrayListOf(undying, fecundity), arrayListOf(false, false, false))
         rainbow =
             Card("Rainbow Wizard", 2, 4, "Wizard", 0, "Mox",
                 arrayListOf(regenerating), arrayListOf(true, true, true))
@@ -143,7 +140,7 @@ class CardAPITest {
         fun `updating a card with updateCardSigil that exists returns true and updates`() {
             // check card 5 exists and check the contents
             assertEquals(squirrel, populatedCards!!.findCard(2))
-            var sigilsBlank: ArrayList<Sigil?> = ArrayList<Sigil?>()
+            val sigilsBlank: ArrayList<Sigil?> = ArrayList()
             assertEquals(sigilsBlank, populatedCards!!.findCard(2)!!.sigils)
 
             // update card 5 with new information and ensure contents updated successfully
